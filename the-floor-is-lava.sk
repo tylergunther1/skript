@@ -1,0 +1,13 @@
+command /playerstatus:
+  description: test
+  trigger:
+    send you are %{_playerstatus}%
+
+on join:
+  set {_playerstatus} to alive
+
+loop all players:
+  if altitude of player is less than 3
+  set {_playerstatus} to dead
+  if altitude of player is greater than or equal to 3
+  set {_playerstatus} to alive
