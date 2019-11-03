@@ -1,0 +1,6 @@
+on right click:
+	block is a sign
+	line 1 of sign is "[Creative]"
+	line 2 of sign is "[Click to tp]"
+	teleport player to location(-196, 64, 137, (creative))
+		
