@@ -1,13 +1,18 @@
 command /playerstatus:
   description: test
   trigger:
-    send you are %{_playerstatus}%
+    if {isAlive::%player%} is false:
+      broadcast "%player% is dead"
+    if {isAlive::%player%} is true:
+      broadcast "%player% is alive"
 
 on join:
-  set {_playerstatus} to alive
+  if world is "lava":
+    set {isAlive::%player%} to true
 
-loop all players:
-  if altitude of player is less than 3
-  set {_playerstatus} to dead
-  if altitude of player is greater than or equal to 3
-  set {_playerstatus} to alive
+every 3 ticks in "lava":
+  loop all players:
+    if loop-player's y-coordinate < 7:
+      set {isAlive::%loop-player%} to false
+    else:
+      set {isAlive::%loop-player%} to true
