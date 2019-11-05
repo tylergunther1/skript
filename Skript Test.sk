@@ -1,2 +1,0 @@
-on join:
-	broadcast "If you see this, It worked!"
