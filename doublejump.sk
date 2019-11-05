@@ -1,0 +1,40 @@
+options:
+    P: &8[&7DoubleJump&8]&7
+    DoubleJumpForce: .5
+
+
+command /doublejump <text>:
+    usage: /doublejump <on/off>
+    permission: skript.op
+    trigger:
+        if arg-1 is "on" or "enable":
+            set {doublejump} to true
+            send "{@P} DoubleJump Enabled!"
+        else if arg-1 is "off" or "disable":
+            delete {doublejump}
+            send "{@P} DoubleJump Disabled"
+            loop all players:
+                loop-player's gamemode is survival or adventure
+                set loop-player's flight state to false
+
+on flight toggle:
+    {doublejump} is true
+    if player's gamemode is not creative:
+        wait 1 tick
+        set player's flight state to false
+        push player upwards at speed {@DoubleJumpForce}
+        push player forwards at speed {@DoubleJumpForce}
+
+on jump:
+    {doublejump} is true
+    if player's gamemode is not creative:
+        set player's flight state to true
+
+on damage:
+    {doublejump} is true
+    if damage cause is fall:
+        cancel event
+
+on join:
+    player's gamemode is survival or adventure
+    set player's flight state to false
