@@ -9,4 +9,4 @@ on rightclick holding a feather:
     wait 20 seconds
     set {canJump::%player%} to true
   else:
-    tell player "You Can't Jump Now!"
+    send "You Can't Jump Now!" to player
