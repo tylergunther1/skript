@@ -1,0 +1,12 @@
+on join:
+  set {canJump::%player%} to true
+
+
+on rightclick holding a feather:
+  if {canJump::%player%} is true:
+    thrust the player upwards at velocity 0.7
+    set {canJump::%player%} to false
+    wait 20 seconds
+    set {canJump::%player%} to true
+else:
+tell player "You Can't Jump Now!"
