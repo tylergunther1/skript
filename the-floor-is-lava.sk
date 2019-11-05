@@ -1,18 +1,32 @@
+#this creates a command
 command /playerstatus:
+#description is the message that displays in /help
   description: test
+#trigger is what the command actually does
   trigger:
+#this checks if the player is alive or dead.
+#"{isAlive::%player%}" is a list variable. "%player%" means it is a unique value
+#for every player.
     if {isAlive::%player%} is false:
       broadcast "%player% is dead"
     if {isAlive::%player%} is true:
       broadcast "%player% is alive"
 
+#activates when the player joins the world
 on join:
+#checks if the world is "lava"
   if world is "lava":
+#sets isAlive to true
     set {isAlive::%player%} to true
 
+#loops every 3 ticks in the world lava
 every 3 ticks in "lava":
+#loop affects all players
   loop all players:
+#checks that the player y level is less than 7
     if loop-player's y-coordinate < 7:
+#sets the variable to false
       set {isAlive::%loop-player%} to false
+#sets variable to true
     else:
       set {isAlive::%loop-player%} to true
