@@ -1,17 +1,24 @@
-on join:
+on world change:
   if world is "lava":
     set {canJump::%player%} to true
-  else
+    set {jumpCount::%player%} to 3
+  else:
     set {canJump::%player%} to false
+    set {jumpCount::%player%} to 0
 
 on rightclick holding a feather:
-  if {canJump::%player%} is true:
-    spawn 20 of "smoke":0.01 offset by 0.2, 0.2, 0.2 at location of player
-    thrust the player upwards at velocity 2
-    thrust the player forwards at velocity 1
-    set {canJump::%player%} to false
-    wait 30 seconds
+  if {canJump::%player%} is false:
+    send "&6 You Can't Jump Now!" to player
+  else if {jumpCount::%player%} < 1:
+    send "&6 You don't have any jumps left!" to player
+  else if {canJump::%player%} is true:
+    if {jumpCount::%player%} > 0:
+      spawn 20 of "explosion_normal":0.01 offset by 0.2, 0.2, 0.2 at location 2 meter above player
+      thrust the player upwards at velocity 1
+      thrust the player forwards at velocity 0.5
+      set {canJump::%player%} to false
+      set {jumpCount::%player%} to {jumpCount::%player%} - 1
+    send "&6 you have &4 %{jumpCount::%player%}% &6 jumps remaining!" to player
+    wait 20 seconds
     set {canJump::%player%} to true
     send "&6 Jump Boost Refreshed!" to player
-  else:
-    send "&6 You Can't Jump Now!" to player
