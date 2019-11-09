@@ -6,6 +6,8 @@ if {isAlive::%player%} is false:
   apply potion of fire resistance 255 to the player for 999 days
   apply potion of regeneration 5 to the player for 5 seconds
   clear inventory
-  give player 1 compass named "&6Right-CLick To Go To Lobby"
+  set player's selected hotbar slot to slot to slot 1 of player
+  give player 1 compass named "&6Right-Click To Go To Lobby"
+  
     on rightclick holding a compass:
       make the command sender execute "/world world"

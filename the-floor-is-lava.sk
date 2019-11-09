@@ -16,6 +16,8 @@ on rightclick on sign:
         set {isAlive::%player%} to true
         set {isInGame::%player%} to true
         set {playerCount} to {playerCount} + 1
+        clear player's inventory
+        set player's selected hotbar slot to slot to slot 1 of player
         give player feather named "&6 Right Click To Launch"
 
 
