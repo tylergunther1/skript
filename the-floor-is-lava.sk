@@ -1,11 +1,3 @@
-command /playerstatus:
-  description: test
-  trigger:
-    if {isAlive::%player%} is false:
-      broadcast "%player% is dead"
-    if {isAlive::%player%} is true:
-      broadcast "%player% is alive"
-
 on rightclick on sign:
   line 1 of the clicked block is "The Floor":
     line 2 of the clicked block is "Is Lava":
@@ -17,13 +9,26 @@ on rightclick on sign:
         set {isInGame::%player%} to true
         set {playerCount} to {playerCount} + 1
         clear player's inventory
-        set player's selected hotbar slot to slot to slot 1 of player
         give player feather named "&6 Right Click To Launch"
-
 
 every 3 ticks in "lava":
   loop all players:
     if loop-player's y-coordinate < 7:
       set {isAlive::%loop-player%} to false
+      force loop-player to fly
+      hide loop-player from all players
+      teleport the loop-player to spawn of "lava"
+      apply potion of resistance 255 to the loop-player for 999 days
+      apply potion of fire resistance 255 to the loop-player for 999 days
+      apply potion of regeneration 5 to the loop-player for 5 seconds
+      clear the loop-player's inventory
+      extinguish the loop-player
+      give loop-player 1 compass named "&6Right-Click To Go To Lobby"
     else:
       set {isAlive::%loop-player%} to true
+
+on rightclick holding a compass:
+  make the command sender execute "/world world"
+  remove resistance from player
+  remove fire resistance from player
+  remove regeneration from player
