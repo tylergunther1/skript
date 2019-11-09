@@ -2,6 +2,7 @@ on rightclick on sign:
   line 1 of the clicked block is "The Floor":
     line 2 of the clicked block is "Is Lava":
       line 3 of the clicked block is "&1[Click To Join]":
+
         teleport player to spawn of "lava"
         wait 3 ticks
         heal the player
@@ -16,8 +17,13 @@ on rightclick on sign:
         give player feather named "&6 Right Click To Launch"
         set player's gamemode to adventure
 
+on damage of player:
+  if victim is in world "lava":
+    cancel event
+
 every 3 ticks in "lava":
   loop all players:
+
     if loop-player's y-coordinate < 7:
       if {isAlive::%loop-player%} is true:
         set {isAlive::%loop-player%} to false
@@ -25,8 +31,6 @@ every 3 ticks in "lava":
         force loop-player to fly
         hide loop-player from all players
         teleport the loop-player to location -15, 16, -89 in world "lava"
-        apply potion of resistance 255 to the loop-player for 999 days
-        apply potion of fire resistance 255 to the loop-player for 999 days
         clear the loop-player's inventory
         give loop-player paper named "&6Right-Click To Go To Lobby"
         wait 5 ticks
@@ -35,9 +39,7 @@ every 3 ticks in "lava":
         feed the loop-player
 
 on rightclick holding paper:
-  remove resistance from player
-  remove fire resistance from player
-  remove regeneration from player
-  teleport player to spawn of "world"
-  make player stop flying
-  reveal player to all players
+  if player is in world "lava":
+    teleport player to spawn of "world"
+    make player stop flying
+    reveal player to all players
