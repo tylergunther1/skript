@@ -2,33 +2,42 @@ on rightclick on sign:
   line 1 of the clicked block is "The Floor":
     line 2 of the clicked block is "Is Lava":
       line 3 of the clicked block is "&1[Click To Join]":
+        teleport player to spawn of "lava"
+        wait 3 ticks
         heal the player
         feed the player
-        teleport player to spawn of "lava"
+        extinguish the player
+        make player stop flying
+        reveal player to all players
         set {isAlive::%player%} to true
         set {isInGame::%player%} to true
         set {playerCount} to {playerCount} + 1
         clear player's inventory
         give player feather named "&6 Right Click To Launch"
+        set player's gamemode to adventure
 
 every 3 ticks in "lava":
   loop all players:
     if loop-player's y-coordinate < 7:
-      set {isAlive::%loop-player%} to false
-      force loop-player to fly
-      hide loop-player from all players
-      teleport the loop-player to spawn of "lava"
-      apply potion of resistance 255 to the loop-player for 999 days
-      apply potion of fire resistance 255 to the loop-player for 999 days
-      apply potion of regeneration 5 to the loop-player for 5 seconds
-      clear the loop-player's inventory
-      extinguish the loop-player
-      give loop-player 1 compass named "&6Right-Click To Go To Lobby"
-    else:
-      set {isAlive::%loop-player%} to true
+      if {isAlive::%loop-player%} is true:
+        set {isAlive::%loop-player%} to false
+        wait 3 ticks
+        force loop-player to fly
+        hide loop-player from all players
+        teleport the loop-player to location -15, 16, -89 in world "lava"
+        apply potion of resistance 255 to the loop-player for 999 days
+        apply potion of fire resistance 255 to the loop-player for 999 days
+        clear the loop-player's inventory
+        give loop-player paper named "&6Right-Click To Go To Lobby"
+        wait 5 ticks
+        extinguish loop-player
+        heal the loop-player
+        feed the loop-player
 
-on rightclick holding a compass:
-  make the command sender execute "/world world"
+on rightclick holding paper:
   remove resistance from player
   remove fire resistance from player
   remove regeneration from player
+  teleport player to spawn of "world"
+  make player stop flying
+  reveal player to all players
