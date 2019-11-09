@@ -1,0 +1,19 @@
+if world is ghost:
+  on join:
+    set {ghost::%player%} to player
+    set {canHit::%player%} to all players
+
+if {ghost::%player%} is true:
+  hide player from all players
+  clear inventory
+  give player 1 golden sword with sharpness 5 named "&6Ectoplasmic Shaft"
+
+on left click on golden sword:
+  if {canHit::%player%} is true:
+    reveal player to all players
+    set {canHit::%player%} to false
+    wait 20 seconds
+    set {canHit::%player%} to true
+    else:
+      cancel event
+      send "&8You Can't Do That Yet"
