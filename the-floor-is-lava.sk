@@ -6,17 +6,18 @@ command /playerstatus:
     if {isAlive::%player%} is true:
       broadcast "%player% is alive"
 
-on world change:
-  if world is "lava":
-    set {isAlive::%player%} to true
-    set {isInGame::%player%} to true
-    set {playerCount} to {playerCount} + 1
-
 on rightclick on sign:
-	line 3 of the clicked block is "[Click To Join]":
-		heal the player
-    feed the player
-    teleport player to spawn of "lava"
+  line 1 of the clicked block is "The Floor":
+    line 2 of the clicked block is "Is Lava":
+      line 3 of the clicked block is "&1[Click To Join]":
+        heal the player
+        feed the player
+        teleport player to spawn of "lava"
+        set {isAlive::%player%} to true
+        set {isInGame::%player%} to true
+        set {playerCount} to {playerCount} + 1
+        give player feather named "&6 Right Click To Launch"
+
 
 every 3 ticks in "lava":
   loop all players:
