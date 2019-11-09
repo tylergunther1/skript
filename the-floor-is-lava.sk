@@ -1,7 +1,45 @@
+<<<<<<< Updated upstream
+=======
+command /playercount:
+  permission: op
+  trigger:
+    broadcast "TEST-- playercount is %{playerCount}%, Game running is %{gameRunning}%"
+
+command /resetplayercount:
+  permission: op
+  trigger:
+    broadcast "&6%player% reset the player count"
+    set {playerCount} to 0
+    set {gameRunning} to false
+
+#Join via command
+command /join lava:
+  description: Joins the floor is lava game.
+  trigger:
+    if {gameRunning} is true:
+      send "&6 This Game is Already Running!" to player
+    else:
+      teleport player to spawn of "lava"
+      heal the player
+      feed the player
+      extinguish the player
+      make player stop flying
+      set {_location} to location of player
+      reveal player to all players
+      set {isAlive::%player%} to true
+      set {playerCount} to {playerCount} + 1
+      clear player's inventory
+      set player's gamemode to adventure
+      broadcast "&1%player% &6has joined The Floor Is Lava" to "lava"
+      broadcast "&6A Player has joined The Floor Is Lava! Do &l'/join lava'&6 to join the game"
+
+#Join via sign
+>>>>>>> Stashed changes
 on rightclick on sign:
   line 1 of the clicked block is "The Floor":
     line 2 of the clicked block is "Is Lava":
       line 3 of the clicked block is "&1[Click To Join]":
+<<<<<<< Updated upstream
 
         teleport player to spawn of "lava"
         wait 3 ticks
@@ -17,16 +55,79 @@ on rightclick on sign:
         give player feather named "&6 Right Click To Launch"
         set player's gamemode to adventure
 
+=======
+        if {gameRunning} is true:
+          send "&6 This Game is Already Running!" to player
+        else:
+          teleport player to spawn of "lava"
+          wait 3 ticks
+          heal the player
+          feed the player
+          extinguish the player
+          make player stop flying
+          reveal player to all players
+          set {isAlive::%player%} to true
+          set {playerCount} to {playerCount} + 1
+          clear player's inventory
+          give player feather named "&6 Right Click To Launch"
+          set player's gamemode to adventure
+          broadcast "&1%player% &6has joined The Floor Is Lava" to "lava"
+          broadcast "&6A Player has joined The Floor Is Lava! Do &l'/join lava'&6 to join the game"
+
+every 3 ticks in "lava":
+  loop all players:
+    if {playerCount} > 0:
+      if loop-player is in world "lava":
+        teleport loop-player to location -15, 10, -89
+
+on player world change:
+  if world is "lava":
+    if {playerCount} >= 2:
+      if {gameRunning} is false:
+        broadcast "&6The Floor Is Lava is starting in 60 seconds! Do &l'/join lava'&6 to join the game!"
+        wait 30 seconds
+        broadcast "&6The Floor Is Lava is starting in 30 seconds! Do &l'/join lava'&6 to join the game!"
+        wait 20 seconds
+        broadcast "&6The Floor Is Lava is starting in 10 seconds!"
+        wait 10 seconds
+        set {gameRunning} to true
+        broadcast "&6 The game has started! You have 10 seconds to run around!" to "lava"
+        wait 10 seconds
+        set {safeZone} to a random integer between 1 and 4
+        if {safeZone} is 1:
+          broadcast "&6You have 20 seconds to get to the &4&lRed &6platform"
+        else if {safeZone} is 2:
+          broadcast "&6You have 20 seconds to get to the &4&lRed &6platform"
+        else if {safeZone} is 3:
+          broadcast "&6You have 20 seconds to get to the &4&lRed &6platform"
+        else if {safeZone} is 4:
+          broadcast "&6You have 20 seconds to get to the &4&lRed &6platform"
+        else:
+          broadcast "&6 Tyler is an incompetent useless human being who is incapable of skripting."
+
+
+#cancels player damage
+>>>>>>> Stashed changes
 on damage of player:
   if victim is in world "lava":
     cancel event
 
+<<<<<<< Updated upstream
 every 3 ticks in "lava":
   loop all players:
 
     if loop-player's y-coordinate < 7:
       if {isAlive::%loop-player%} is true:
         set {isAlive::%loop-player%} to false
+=======
+#checks if player is dead. If so, sets as a spectator
+every 3 ticks in "lava":
+  loop all players:
+    if loop-player's y-coordinate < 7:
+      if {isAlive::%loop-player%} is true:
+        set {isAlive::%loop-player%} to false
+        broadcast "&l&1%loop-player% &6couldn't take the heat..." to "lava"
+>>>>>>> Stashed changes
         wait 3 ticks
         force loop-player to fly
         hide loop-player from all players
@@ -37,9 +138,23 @@ every 3 ticks in "lava":
         extinguish loop-player
         heal the loop-player
         feed the loop-player
+<<<<<<< Updated upstream
 
+=======
+        set loop-player's walk speed to 0.2
+        set loop-player's fly speed to 0.1
+
+#sends spectators back to lobby
+>>>>>>> Stashed changes
 on rightclick holding paper:
   if player is in world "lava":
     teleport player to spawn of "world"
     make player stop flying
     reveal player to all players
+<<<<<<< Updated upstream
+=======
+
+on world change:
+  if past world is "lava":
+    set {playerCount} to {playerCount} - 1
+>>>>>>> Stashed changes
